@@ -44,13 +44,13 @@
 
 ```
 /plugin marketplace add GitDzreal93/x-video-skill
-/plugin install ai-comic-drama
+/plugin install x-video-skill
 ```
 
 ### 方式二：手动克隆
 
 ```bash
-git clone https://github.com/GitDzreal93/x-video-skill.git ~/.claude/skills/ai-comic-drama
+git clone https://github.com/GitDzreal93/x-video-skill.git ~/.claude/skills/x-video-skill
 ```
 
 ### 安装 Python 依赖
@@ -244,7 +244,7 @@ ai-comic-drama/
 ## 卸载
 
 ```bash
-rm -rf ~/.claude/skills/ai-comic-drama
+rm -rf ~/.claude/skills/x-video-skill
 ```
 
 ## 许可证
