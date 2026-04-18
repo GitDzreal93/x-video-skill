@@ -17,7 +17,7 @@
 | Phase 3 | 分镜拆解 | 1-3s 镜头拆分，景别/台词/音效标注 |
 | Phase 4 | 文生图提示词 | 首帧/尾帧/代表画面三套提示词 |
 | Phase 5 | 图生视频提示词 | 动作描述 + 镜头运动 + 情绪氛围 |
-| Phase 6 | AI 生图/生视频 | 火山引擎即梦AI，批量生成 |
+| Phase 6 | AI 生图/生视频 | 火山引擎即梦AI + 海螺AI，批量生成 |
 | Phase 7 | 全流程输出 | Markdown 表格 + Excel 交付 |
 | Phase 8 | 后期制作 | TTS 配音 + 音效 + BGM + 字幕 + 合成成片 |
 
@@ -59,7 +59,7 @@ git clone https://github.com/GitDzreal93/x-video-skill.git ~/.claude/skills/x-vi
 # TTS 配音（免费引擎）
 pip3 install edge-tts
 
-# 火山引擎 SDK（AI 生图/生视频）
+# 火山引擎 SDK（AI 生图）
 pip3 install volcengine-python-sdk
 
 # HTTP 请求（豆包 TTS / 下载媒体）
@@ -67,12 +67,15 @@ pip3 install requests
 
 # Excel 导出
 pip3 install openpyxl
+
+# 海螺AI 视频生成（浏览器自动化，可选）
+pip3 install playwright
 ```
 
 或一条命令安装全部：
 
 ```bash
-pip3 install edge-tts volcengine-python-sdk requests openpyxl
+pip3 install edge-tts volcengine-python-sdk requests openpyxl playwright
 ```
 
 ### 验证安装
@@ -123,6 +126,28 @@ export VOLCENGINE_SK="your_secret_key"
 ```
 
 获取 AK/SK：https://console.volcengine.com/iam/keymanage
+
+### 海螺AI 视频生成（可选，另一种生视频引擎）
+
+海螺AI通过浏览器自动化操作，无需 API Key。需要：
+
+1. 以调试模式启动 Chrome：
+   ```bash
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+   ```
+
+2. 在浏览器中手动登录海螺AI：https://hailuoai.com
+
+3. 使用时添加 `--engine hailuo` 参数：
+   ```bash
+   # 单个生成
+   python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+     --engine hailuo --image first.png --prompt "角色转身" --output video.mp4
+
+   # 批量生成（顺序执行，每条约2-3分钟）
+   python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+     --engine hailuo --file 分镜数据.json --image-dir ./images --output ./videos
+   ```
 
 ### 豆包 TTS（可选，高质量配音）
 
@@ -226,7 +251,7 @@ ai-comic-drama/
 ├── scripts/                        # 工具脚本
 │   ├── workspace.py                #   工作区路径管理
 │   ├── generate_image.py           #   火山引擎即梦AI 文生图
-│   ├── generate_video.py           #   火山引擎即梦AI 图生视频
+│   ├── generate_video.py           #   图生视频（即梦AI / 海螺AI）
 │   ├── generate_tts.py             #   TTS 配音（edge-tts / 豆包）
 │   ├── generate_sfx.py             #   本地音效库混音
 │   ├── generate_subtitle.py        #   SRT 字幕生成

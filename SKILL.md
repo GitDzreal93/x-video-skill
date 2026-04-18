@@ -332,9 +332,19 @@ mkdir -p "/Volumes/dz/ai_video/我的新项目/output_audio/sfx"
 
 ### 前置条件
 - 已完成 Phase 1-5（至少有分镜JSON数据，包含文生图/图生视频提示词）
-- 已配置火山引擎 AK/SK
 
-### 步骤1：配置 API 凭证
+### 视频生成引擎
+
+支持两种图生视频引擎，通过 `--engine` 参数切换：
+
+| 引擎 | 参数 | 原理 | 前提条件 | 并发 |
+|------|------|------|----------|------|
+| 即梦AI | `--engine jimeng`（默认） | 火山引擎 API 调用 | AK/SK | 支持多并发 |
+| 海螺AI | `--engine hailuo` | CDP浏览器自动化 | Chrome CDP + 登录态 | 顺序执行 |
+
+### 步骤1：配置引擎凭证
+
+#### 即梦AI（默认）
 
 首次使用需要配置火山引擎 AK/SK。
 
@@ -344,7 +354,7 @@ cat ~/.ai-comic-drama/config.json 2>/dev/null || echo "未配置"
 ```
 
 **如果未配置，必须先询问用户提供 AK/SK：**
-> 使用 AI 生图/生视频功能需要火山引擎的 Access Key 和 Secret Key。
+> 使用即梦AI生视频功能需要火山引擎的 Access Key 和 Secret Key。
 > 请提供你的 AK 和 SK。
 > 获取方式：https://console.volcengine.com/iam/keymanage
 
@@ -365,6 +375,22 @@ print('凭证已保存')
 export VOLCENGINE_AK="your_access_key"
 export VOLCENGINE_SK="your_secret_key"
 ```
+
+#### 海螺AI
+
+海螺AI通过浏览器自动化操作，无需 API Key。需要：
+
+1. 以调试模式启动 Chrome：
+   ```bash
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+   ```
+
+2. 在浏览器中手动登录海螺AI：https://hailuoai.com
+
+3. 安装 Playwright（如果未安装）：
+   ```bash
+   pip3 install playwright
+   ```
 
 ### 步骤2：文生图（角色三视图 + 分镜画面）
 
@@ -403,7 +429,7 @@ python3 ~/.claude/skills/ai-comic-drama/scripts/generate_image.py \
 
 ### 步骤3：图生视频（图片 → 动态视频）
 
-#### 单个生成
+#### 即梦AI（默认引擎）
 
 ```bash
 # 图片 + 提示词 → 视频
@@ -414,11 +440,30 @@ python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
   --duration 3
 ```
 
+#### 海螺AI（--engine hailuo）
+
+```bash
+# 图片 + 提示词 → 视频（海螺AI Hailuo 2.0）
+python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+  --engine hailuo \
+  --image 镜头001_首帧.png \
+  --prompt "角色转身，镜头缓慢拉远，紧张氛围" \
+  --output 镜头001.mp4
+```
+
 #### 首帧+尾帧模式
 
 ```bash
-# 指定首帧和尾帧，AI自动生成过渡动画
+# 即梦AI
 python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+  --image 镜头001_首帧.png \
+  --last-frame 镜头001_尾帧.png \
+  --prompt "角色从站立到坐下" \
+  --output 镜头001.mp4
+
+# 海螺AI
+python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+  --engine hailuo \
   --image 镜头001_首帧.png \
   --last-frame 镜头001_尾帧.png \
   --prompt "角色从站立到坐下" \
@@ -428,8 +473,15 @@ python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
 #### 批量生成
 
 ```bash
-# 从分镜JSON + 图片目录批量生成视频
+# 即梦AI（支持并发，默认2）
 python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+  --file 分镜数据.json \
+  --image-dir ./output_images \
+  --output ./output_videos
+
+# 海螺AI（顺序执行，每条视频约2-3分钟）
+python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+  --engine hailuo \
   --file 分镜数据.json \
   --image-dir ./output_images \
   --output ./output_videos
@@ -690,7 +742,7 @@ output_videos/
 | `scripts/workspace.py` | 工作区路径管理（共享工具） | 被其他脚本导入 |
 | `scripts/export_storyboard.py` | 分镜数据导出 Excel | Phase 7 输出交付物时 |
 | `scripts/generate_image.py` | 火山引擎即梦AI 文生图 | Phase 6 生成图片时 |
-| `scripts/generate_video.py` | 火山引擎即梦AI 图生视频 | Phase 6 生成视频时 |
+| `scripts/generate_video.py` | 图生视频（即梦AI / 海螺AI） | Phase 6 生成视频时 |
 | `scripts/generate_tts.py` | TTS 台词配音（edge-tts / 豆包） | Phase 8 生成配音时 |
 | `scripts/generate_sfx.py` | 本地音效库混音 | Phase 8 生成音效时 |
 | `scripts/generate_subtitle.py` | SRT 字幕生成 | Phase 8 生成字幕时 |
