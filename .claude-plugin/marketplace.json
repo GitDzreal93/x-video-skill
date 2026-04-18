@@ -1,0 +1,16 @@
+{
+  "marketplace": {
+    "name": "x-video-skill",
+    "description": "AI漫剧全流程制作 Skill — 从故事创意到完整视频成片",
+    "homepage": "https://github.com/GitDzreal93/x-video-skill"
+  },
+  "plugins": [
+    {
+      "name": "ai-comic-drama",
+      "description": "AI漫剧全流程制作：剧本创作 → 美术风格 → 分镜拆解 → AI生图/生视频 → 配音/音效/字幕 → 视频合成。支持火山引擎即梦AI、edge-tts/豆包TTS双引擎、ffmpeg后期合成。",
+      "homepage": "https://github.com/GitDzreal93/x-video-skill",
+      "source": "./",
+      "categories": ["creative", "video", "ai-art"]
+    }
+  ]
+}

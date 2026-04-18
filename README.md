@@ -38,10 +38,18 @@
 - Python 3.10+
 - ffmpeg（视频合成需要）
 
-### 一键安装
+### 方式一：通过 Plugin 命令安装（推荐）
+
+在 Claude Code 中执行：
+
+```
+/plugin marketplace add GitDzreal93/x-video-skill
+/plugin install ai-comic-drama
+```
+
+### 方式二：手动克隆
 
 ```bash
-# 克隆到 Claude Code skills 目录
 git clone https://github.com/GitDzreal93/x-video-skill.git ~/.claude/skills/ai-comic-drama
 ```
 
