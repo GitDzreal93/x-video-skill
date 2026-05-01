@@ -118,7 +118,7 @@ Claude 会引导你完成全部 8 个阶段。
 
 ```bash
 # 方式一：交互式配置
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_image.py --setup
+python3 ~/.claude/skills/x-video-skill/scripts/generate_image.py --setup
 
 # 方式二：环境变量
 export VOLCENGINE_AK="your_access_key"
@@ -141,17 +141,17 @@ export VOLCENGINE_SK="your_secret_key"
 3. 使用时添加 `--engine hailuo` 参数：
    ```bash
    # 单个生成
-   python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+   python3 ~/.claude/skills/x-video-skill/scripts/generate_video.py \
      --engine hailuo --image first.png --prompt "角色转身" --output video.mp4
 
    # 批量生成（顺序执行，每条约2-3分钟）
-   python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+   python3 ~/.claude/skills/x-video-skill/scripts/generate_video.py \
      --engine hailuo --file 分镜数据.json --image-dir ./images --output ./videos
    ```
 
 ### 豆包 TTS（可选，高质量配音）
 
-编辑 `~/.ai-comic-drama/config.json`：
+编辑 `~/.x-video-skill/config.json`：
 
 ```json
 {
@@ -166,10 +166,10 @@ export VOLCENGINE_SK="your_secret_key"
 
 ```bash
 # 初始化音效库目录
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_sfx.py --init-library
+python3 ~/.claude/skills/x-video-skill/scripts/generate_sfx.py --init-library
 
 # 将 WAV/MP3 音效文件放入对应目录
-# ~/.ai-comic-drama/sfx_library/
+# ~/.x-video-skill/sfx_library/
 #   ambient/    环境音
 #   mechanical/ 机械音
 #   electronic/ 科技音
@@ -209,42 +209,42 @@ python3 ~/.claude/skills/ai-comic-drama/scripts/generate_sfx.py --init-library
 
 ```bash
 # TTS 配音（免费引擎）
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_tts.py \
+python3 ~/.claude/skills/x-video-skill/scripts/generate_tts.py \
   --file 分镜数据.json --workspace ./我的项目/ --engine free
 
 # TTS 配音（豆包引擎，音质更好）
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_tts.py \
+python3 ~/.claude/skills/x-video-skill/scripts/generate_tts.py \
   --file 分镜数据.json --workspace ./我的项目/ --engine doubao
 
 # 音效生成
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_sfx.py \
+python3 ~/.claude/skills/x-video-skill/scripts/generate_sfx.py \
   --file 分镜数据.json --workspace ./我的项目/
 
 # 字幕生成
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_subtitle.py \
+python3 ~/.claude/skills/x-video-skill/scripts/generate_subtitle.py \
   --file 分镜数据.json --workspace ./我的项目/
 
 # 视频合成（自动 Doctor 检查 + 音频变速适配）
-python3 ~/.claude/skills/ai-comic-drama/scripts/assemble_video.py \
+python3 ~/.claude/skills/x-video-skill/scripts/assemble_video.py \
   --file 分镜数据.json --workspace ./我的项目/
 
 # AI 生图
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_image.py \
+python3 ~/.claude/skills/x-video-skill/scripts/generate_image.py \
   --file 分镜数据.json --workspace ./我的项目/ --aspect 16:9
 
 # AI 生视频
-python3 ~/.claude/skills/ai-comic-drama/scripts/generate_video.py \
+python3 ~/.claude/skills/x-video-skill/scripts/generate_video.py \
   --file 分镜数据.json --workspace ./我的项目/ --concurrency 2
 
 # 导出 Excel
-python3 ~/.claude/skills/ai-comic-drama/scripts/export_storyboard.py \
+python3 ~/.claude/skills/x-video-skill/scripts/export_storyboard.py \
   --data '<分镜JSON>' --output 分镜表.xlsx
 ```
 
 ## 项目结构
 
 ```
-ai-comic-drama/
+x-video-skill/
 ├── SKILL.md                        # Skill 定义文件（Claude Code 自动加载）
 ├── README.md                       # 本文件
 ├── .gitignore

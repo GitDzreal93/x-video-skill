@@ -334,3 +334,106 @@ shot 2, [景别+角度] of [主体], [镜头运动], [风格/氛围描述]
 
 **示例（广告）：**
 > 巴黎公寓窗边场景下，午后鎏金阳光透过百叶窗洒在香水瓶上，镜头从散落的玫瑰花瓣缓缓推进，焦点移向 Kling 香水瓶的切割面，捕捉金色刻字与瓶身的光影流动，旁白（慵懒法式女声，英式口音）：Bathe in the golden hour. 镜头拉远定格完整场景，旁白：Wrap yourself in luxury with every breath.
+
+---
+
+## 七、GPT-Image-2 提示词模式
+
+GPT-Image-2 (OpenAI) 图片生成模型，支持 300+ 案例提炼的五种提示词模式：
+
+### 1. 经典三段式（人像/产品）
+
+**结构：** `[光线与镜头] + [主体描述] + [细节与氛围]`
+
+```
+35mm film photography with harsh convenience store fluorescent lighting,
+intimate medium shot, [主体描述], authentic film grain, [氛围],
+no plastic skin, no digital over-sharpening, no watermark
+```
+
+**核心负向提示词：**
+```
+no plastic skin, no digital over-sharpening, no airbrushing,
+no blemishes, no oily skin, no watermark, no text
+```
+
+### 2. 文学化描述（中文海报/插画）
+
+以散文式语言从整体到局部展开，融入文化元素、色彩意象和情绪渲染。
+
+```
+极简新中式美学风格，画面以淡雅的灰白色为底，呈现出一种纸艺剪影般的立体感。
+一条S形蜿蜒的裂痕状边缘将画面分割，仿佛撕开了一层纸面，露出内部色彩斑斓的东方山水景象。
+裂口内，一条蜿蜒的河流自上而下贯穿整个构图...
+下方题字"东方美学"以黑色楷体书写，日期与红色印章相呼应...
+```
+
+### 3. 结构化 JSON（广告创意）
+
+用 JSON 定义多区块布局，精确控制每个区块的主题、元素、文字和装饰。
+
+```json
+{
+  "type": "2x2 grid of Japanese digital advertisement banners",
+  "layout": {
+    "structure": "4 equal quadrants",
+    "quadrants": [
+      {
+        "position": "top-left",
+        "theme": "Travel",
+        "subject": "A couple on a white sand beach",
+        "text_labels": ["今年こそ、解き放て。", "39,800円〜"],
+        "icons": {"count": 3}
+      }
+    ]
+  }
+}
+```
+
+### 4. 参数化模板（电商）
+
+使用 `{argument name="x" default="y"}` 格式嵌入可替换参数，便于批量生成不同变体。
+
+```
+A luxurious cinematic product photograph of a classic rectangular perfume bottle
+inspired by {argument name="brand label" default="N°5 CHANEL"},
+placed on a glossy black marble surface...
+```
+
+### 5. 极简指令（能力展示/实验）
+
+简短明确的指令，测试模型对精确要求的理解能力。
+
+```
+A wooden bookshelf consisting of three shelves: On the top shelf, there should be
+one book, on the second shelf, there should be three books, and on the bottom
+shelf, there should be seven books.
+```
+
+---
+
+## 八、多宫格/网格布局提示词
+
+用于生成 4×4 或 2×2 等多面板布局（分镜图/教学图/广告横幅）。
+
+### 电影级动作分镜 16 宫格
+```
+高分辨率电影级动作分镜，专业导演分镜板风格，
+4×4共16宫格，日式动画，Trigger社风格，
+高饱和霓虹色碰撞，展示[场景描述]
+```
+
+### 舞蹈/动作分解 16 格
+```
+生成高清高分辨率[舞蹈类型]卡点动作分解教学海报，
+4×4网格展示，共16个编号动作，
+简单背景清晰展示动作，由AI生成虚拟角色演示
+```
+
+### 广告 2×2 网格
+```
+2x2 grid of [主题] advertisement banners,
+4 equal quadrants, each with independent theme,
+[象限1描述] + [象限2描述] + [象限3描述] + [象限4描述],
+uniform visual style across all quadrants
+```

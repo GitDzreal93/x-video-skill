@@ -4,7 +4,7 @@ AI漫剧音效生成脚本
 从分镜 JSON 的音效描述生成每镜头的音效音频
 
 方案:
-1. 本地音效库：~/.ai-comic-drama/sfx_library/ 中的 WAV/MP3 文件
+1. 本地音效库：~/.x-video-skill/sfx_library/ 中的 WAV/MP3 文件
 2. 关键词匹配：将中文音效描述映射到本地文件
 3. ffmpeg 混音：叠加多个音效到指定时长
 
@@ -33,7 +33,7 @@ from workspace import add_workspace_args, resolve_workspace
 
 # ── 音效库路径 ────────────────────────────────────────────
 
-SFX_LIB_DIR = Path.home() / ".ai-comic-drama" / "sfx_library"
+SFX_LIB_DIR = Path.home() / ".x-video-skill" / "sfx_library"
 
 SFX_CATEGORIES = {
     "ambient": "环境音（雨声、风声、脚步声等）",

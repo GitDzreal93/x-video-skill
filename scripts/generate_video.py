@@ -29,7 +29,7 @@ AI漫剧图生视频脚本
 
 即梦AI配置（按优先级排序）:
 1. 环境变量 VOLCENGINE_AK / VOLCENGINE_SK（推荐）
-2. 配置文件 ~/.ai-comic-drama/config.json
+2. 配置文件 ~/.x-video-skill/config.json
 3. 命令行参数 --ak --sk
 """
 
@@ -55,7 +55,7 @@ from workspace import add_workspace_args, resolve_workspace
 
 # ── 配置管理 ──────────────────────────────────────────────
 
-CONFIG_DIR = Path.home() / ".ai-comic-drama"
+CONFIG_DIR = Path.home() / ".x-video-skill"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 
 

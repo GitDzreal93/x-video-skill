@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "x-video-skill://storyboard-schema.json",
+  "title": "AI漫剧分镜数据 JSON Schema",
+  "description": "x-video-skill 全流程标准数据格式。所有脚本（生图/生视频/TTS/音效/字幕/合成/Excel导出）均基于此格式工作。",
+  "type": "object",
+  "required": ["shots"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "title": "项目元信息",
+      "description": "项目的全局配置和元数据",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "项目/短片标题",
+          "examples": ["最后的代码"]
+        },
+        "style": {
+          "type": "string",
+          "description": "美术风格描述",
+          "examples": ["国漫3D + 科幻赛博朋克"]
+        },
+        "duration": {
+          "type": "string",
+          "description": "总时长描述",
+          "examples": ["60s", "约1分钟"]
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "description": "画幅比例",
+          "examples": ["16:9", "9:16", "2.35:1"]
+        }
+      }
+    },
+    "characters": {
+      "type": "array",
+      "title": "角色列表",
+      "description": "有台词的主要角色。每个角色应有三视图提示词。",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "角色名称",
+            "examples": ["秦臻", "AI执政官"]
+          },
+          "turnaround_prompt": {
+            "type": "string",
+            "description": "三视图文生图提示词（1:1正方形，纯白背景）",
+            "examples": ["国漫3d风格，角色三视图，圆脸微胖青年..."]
+          },
+          "signature_feature": {
+            "type": "string",
+            "description": "标志性特征（跨镜头识别用）",
+            "examples": ["黑框眼镜", "暗红凤袍"]
+          },
+          "signature_color": {
+            "type": "string",
+            "description": "标志色",
+            "examples": ["暗红+金黄", "#2F5496"]
+          }
+        }
+      }
+    },
+    "shots": {
+      "type": "array",
+      "title": "分镜列表",
+      "description": "按顺序排列的所有分镜镜头",
+      "items": {
+        "type": "object",
+        "required": ["shot_number", "duration"],
+        "properties": {
+          "shot_number": {
+            "type": "integer",
+            "description": "镜头编号（1-based）",
+            "minimum": 1,
+            "examples": [1, 2, 3]
+          },
+          "scene": {
+            "type": "string",
+            "description": "拍摄场景/场景名称",
+            "examples": ["SPA馆按摩区", "AI数据中心控制室"]
+          },
+          "description": {
+            "type": "string",
+            "description": "画面内容描述（分镜的文字说明）",
+            "examples": ["秦臻双手颤抖，缓缓按下回车键"]
+          },
+          "shot_type": {
+            "type": "string",
+            "description": "景别/镜头类型",
+            "examples": ["特写", "近景", "中景", "全景", "远景"]
+          },
+          "sound": {
+            "type": "string",
+            "description": "音效描述（+号分隔多个标签）",
+            "examples": ["键盘敲击+电子音", "雨声+脚步声+门吱呀"]
+          },
+          "dialogue": {
+            "type": "string",
+            "description": "台词（格式：角色（情绪）："文本"）",
+            "examples": ["秦臻（颤抖）：\"这次真的结束了...\""]
+          },
+          "duration": {
+            "type": "string",
+            "description": "镜头时长",
+            "examples": ["3s", "2.5s", "5s"]
+          },
+          "first_frame_prompt": {
+            "type": "string",
+            "description": "首帧文生图提示词（镜头起始状态）",
+            "examples": ["国漫3d风格，AI数据中心控制室..."]
+          },
+          "last_frame_prompt": {
+            "type": "string",
+            "description": "尾帧文生图提示词（镜头结束状态）",
+            "examples": ["国漫3d风格，AI数据中心控制室..."]
+          },
+          "image_prompt": {
+            "type": "string",
+            "description": "代表画面文生图提示词（镜头的典型画面）",
+            "examples": ["国漫3d风格，AI数据中心控制室..."]
+          },
+          "video_prompt": {
+            "type": "string",
+            "description": "图生视频提示词（动作+运镜+情绪）",
+            "examples": ["秦臻按下回车键，屏幕光芒照亮面部，镜头缓慢推进"]
+          }
+        }
+      }
+    }
+  }
+}

@@ -35,7 +35,7 @@ from workspace import add_workspace_args, resolve_workspace
 
 # ── 配置路径 ──────────────────────────────────────────────
 
-CONFIG_PATH = Path.home() / ".ai-comic-drama" / "config.json"
+CONFIG_PATH = Path.home() / ".x-video-skill" / "config.json"
 
 
 def load_config():
@@ -189,7 +189,7 @@ def doubao_tts_generate(text, output_path, speaker="臻叔",
 
     payload = {
         "user": {
-            "uid": "ai-comic-drama",
+            "uid": "x-video-skill",
         },
         "namespace": "BidirectionalTTS",
         "req_params": {
